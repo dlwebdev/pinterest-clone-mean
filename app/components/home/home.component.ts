@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FORM_DIRECTIVES } from '@angular/forms';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+//import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Http } from "@angular/http";
 //import './rxjs-operators';
 
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     * Get the names OnInit
     */
     ngOnInit() {
-        let previousSearch = Cookie.get('previousSearch');
+        let previousSearch = "";//Cookie.get('previousSearch');
         console.log('Checking for cookie: ', previousSearch);
     
         if(previousSearch) {
@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit {
     
     getBars(city: string) {
         // Call getBarsByCity from businessService. Pass in the city to search
-        Cookie.set('previousSearch', city);
+        //Cookie.set('previousSearch', city);
         
         //console.log("Getting bars for city: ", city);
         
