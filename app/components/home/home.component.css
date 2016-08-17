@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  padding: 0 16px;
+}
+
+body, html {
+  background: #f1f1f1 !important;
+}
+
+input {
+  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 0 0 8px;
+}
+
+.rounded-input {
+  border-radius: 5px;
+}
+
+.go-btn {
+  width: 100%;
+}
+
+.venues-list {
+  margin-top: 10px;  
+}
+
+.venues-list .col-md-2 {
+  width: 12.666667%;
+}
+
+.venues-list .col-md-10 {
+  width: 84.333333%;
+}
+
+.list-group-item-heading {
+  font-size: 20px;
+}
+
+.list-group-item-text {
+  margin-top:10px;
+  font-style: italic;
+}
+
+.venues-list .btn-xs {
+  height: 25px;
+}
+
+.bar-reviews {
+  color: #FFF;
+}
+
+.loading-container {
+  margin-top: 25px;  
+}

@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var passport = require('passport');
 var async = require('async');
 var moment = require('moment');
-var passport = require('passport');
 
 var MongoStore = require('connect-mongo')(session);
 
@@ -35,7 +35,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app')));
 
-var Rsvp = require('./server/models/rsvp');
 var Yelp = require('yelp');
 
 var yelp = new Yelp({
@@ -80,24 +79,60 @@ app.get('/auth/twitter/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });  
-    
-app.get('/api/user/authenticated', function(req, res, next) {
-  var authed = false;
-  if (req.isAuthenticated()) {
-    authed = true;
-  }
-  res.json({'authenticated': authed});
-});    
-    
-app.get('/api/user/get-id-of-logged-in', function(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.json({'user': req.user});
-  } else {
-    res.json({'userId': '-1'});
-  }
-}); 
+  
+var Rsvp = require('./server/models/rsvp');
 
-app.use('/api/users', users);
+  // Endpoint to retrieve local bars from yelp ip. location param passed in is the city you desire results for
+  app.get('/api/yelp-search/:location', function(req, res) {
+    var bars = [];
+    var currentDate = moment().format('MM-DD-YYYY');
+    
+    yelp.search({ term: 'bars', location: req.params.location })
+    .then(function (data) {
+      bars = data.businesses;
+      
+      var barsProcessed = 1;
+      //console.log('Should run ' + bars.length + ' times.');
+      
+      async.forEachLimit(bars, 5, function(bar, callback) {
+        var barId = bar.id;
+        var barRsvps = 0;
+        var currentBar;
+        
+        Rsvp.find({bar: barId, dateAdded: currentDate}, function (err, bar) {
+          if(err) console.log('Err: ', err);
+          currentBar = bar;
+        }).then(function() {         
+          barRsvps = 0;
+          bar.userIsGoing = 0;
+          if(currentBar.length) {
+            barRsvps = currentBar[0].numberAttending;                
+          }
+          bar.totalRSVPs = barRsvps;
+          callback();
+        });
+        
+        if(barsProcessed === bars.length) {
+          // All bars processed. Send back results immediately.
+          res.send(bars);
+        }
+        
+        //console.log('Processed bar: ', barsProcessed);
+        barsProcessed++;
+      }, 
+      function(err) {
+        if (err) console.log(err);
+        res.send(bars);
+      });
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+    
+  });
+  
+
+app.use('/api/user', users);
 app.use('/api/rsvps', rsvps);
 
 // catch 404 and forward to error handler

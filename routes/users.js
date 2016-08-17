@@ -9,4 +9,20 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/authenticated', function(req, res, next) {
+  var authed = false;
+  if (req.isAuthenticated()) {
+    authed = true;
+  }
+  res.json({'authenticated': authed});
+});    
+    
+router.get('/get-id-of-logged-in', function(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.json({'user': req.user});
+  } else {
+    res.json({'userId': '-1'});
+  }
+}); 
+
 module.exports = router;

@@ -2,7 +2,7 @@
 <h2>Page: {{name}}</h2>
 -->
 
-<pre>Response from server: /api/users</pre>
+<pre>Response from server: /api/user</pre>
 <pre>{{ users?.name }}</pre>
 <pre>{{ users?.last }}</pre>
 
@@ -16,5 +16,41 @@
     </p>
   </div>
 
+  <div class="row">
+    <div class="col-md-10">
+      <!--<input type="text" class="rounded-input" placeholder="Location" [(ngModel)]="cityToSearch" [ngModelOptions]="{standalone: true}">-->
+      <input type="text" class="rounded-input" [(ngModel)]="cityToSearch" placeholder="Location">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary go-btn" (click)="search(cityToSearch)">Go</button>
+    </div>
+  </div>
+  
+  <div *ngIf="isLoading" class="row text-center loading-container">
+    <img src="/images/facebook.gif" />
+  </div>
+  
+  <div class="row venues-list">
+    <div class="list-group">
+      <div *ngFor="let bar of bars; let i = index" href="#" class="list-group-item active">
+        <div class="row">
+          <div class="col-md-2">
+            <a href="{{bar.url}}" target="_blank" class="list-group-item-heading"><img src="{{bar.image_url}}" /></a>
+          </div>
+          <div class="col-md-10">
+            <a href="{{bar.url}}" target="_blank" class="list-group-item-heading">{{bar.name}}</a>
+            
+            
+            <button *ngIf="!bar.userIsGoing" type="button" class="btn btn-default btn-xs" (click)="rsvp(i)">RSVP</button>
+            <button *ngIf="bar.userIsGoing" type="button" class="btn btn-default btn-xs" (click)="cancelRsvp(i)">Cancel RSVP</button>
+            
+            &nbsp;{{bar.totalRSVPs}} Currently Going
+            <p class="list-group-item-text">"{{bar.snippet_text}}"</p>
+            <img src="{{bar.rating_img_url_large}}">&nbsp;<a href="{{bar.url}}" class="bar-reviews" target="_blank">{{bar.review_count}}&nbsp;Reviews</a>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>  
   
 </div>
