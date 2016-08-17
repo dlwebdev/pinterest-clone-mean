@@ -12,40 +12,43 @@ router.get('/', function(req, res) {
     }); 
 });
 
-  router.get('/api/rsvp/:barId', function(req, res) {
+  router.get('/:barId', function(req, res) {
     // Create a new rsvp
     
     //console.log('Remove RSVPs with dateAdded older than 2 days ago to keep data small.');
     
     var currentDate = moment().format('MM-DD-YYYY');
-
     var existingBar;
     var barHasPreviousRsvpToday = false;
-
     var barId = req.params.barId;
     
     //console.log('Checking if there is an RSVP TODAY for bar with id of: ', barId);
     //console.log('CURRENT DATE: ', currentDate);
     
     Rsvp.find({bar: barId, dateAdded: currentDate}, function (err, bar) {
-      //console.log('Found bar with previous RSVP for today. Bar ID: ', bar.bar);
+      //console.log('Found bar with previous RSVP for today. Bar ID: ', bar);
       if(err) console.log('Err: ', err);
-      
-      barHasPreviousRsvpToday = true;
-      existingBar = bar;
+      if(bar) {
+        existingBar = bar[0]; 
+      }
     }).then(function(){    
       //console.log('Working with Bar RSVP of: ', existingBar);
 
+      if(existingBar) {
+        //console.log("TRUE");
+          barHasPreviousRsvpToday = true;
+      }
+
       if(barHasPreviousRsvpToday) {
-        //console.log('WILL UPDATE');
+        //console.log('WILL UPDATE Bar: ', existingBar);
         
         var numAttending = 0 + existingBar.numberAttending;
         existingBar.numberAttending = numAttending + 1;
       
         Rsvp.update({_id: existingBar.id}, existingBar, {upsert: true}, function (err, obj) {
             if(err) console.log('Err: ', err);
-          //console.log('UPDATED SUCCESSFULLY!');
-          res.status(201).json(existingBar);
+            //console.log('UPDATED SUCCESSFULLY!');
+            res.status(201).json(existingBar);
         });     
         
       } else {
@@ -70,15 +73,13 @@ router.get('/', function(req, res) {
   });  
   
   // Endpoint to cancel a rsvp. Just decrements the numberAttending count for this bar on this day
-  router.get('/api/cancel-rsvp/:barId', function(req, res) {
+  router.get('/cancel/:barId', function(req, res) {
     // USER HAS TO BE LOGGED IN
     //console.log('Remove RSVPs with dateAdded older than 2 days ago to keep data small.');
     
     var currentDate = moment().format('MM-DD-YYYY');
-
     var existingBar;
     var barHasPreviousRsvpToday = false;
-
     var barId = req.params.barId;
     
     Rsvp.find({bar: barId, dateAdded: currentDate}, function (err, bar) {
@@ -86,7 +87,7 @@ router.get('/', function(req, res) {
         //console.log('Found bar with previous RSVP for today. Bar ID: ', bar.bar);
       
         barHasPreviousRsvpToday = true;
-        existingBar = bar;
+        existingBar = bar[0];
     }).then(function(){    
       //console.log('Working with Bar RSVP of: ', existingBar);
 

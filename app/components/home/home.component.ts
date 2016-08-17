@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FORM_DIRECTIVES } from '@angular/forms';
-//import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Http } from "@angular/http";
 //import './rxjs-operators';
 
@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
     * Get the names OnInit
     */
     ngOnInit() {
-        let previousSearch = "";//Cookie.get('previousSearch');
-        //console.log('Checking for cookie: ', previousSearch);
+        let previousSearch = Cookie.get('previousSearch');
+        console.log('Checking for cookie: ', previousSearch);
     
         if(previousSearch) {
             this.cityToSearch = previousSearch;
@@ -44,11 +44,58 @@ export class HomeComponent implements OnInit {
     }    
     
     rsvp(index: any) {
-        console.log("Will RSVP: " , this.bars[index]);
+        //console.log("Will RSVP: " , this.bars[index]);
+      
+        this.http.get('/api/user/authenticated')
+            .map(data => data.json())
+            .subscribe(
+                resp => {
+                    //console.log('Authentication response: ', resp);
+                    
+                    if(!(resp as any).authenticated) {
+                      window.location.href = '/auth/twitter';  
+                      return false;
+                    } else {
+                      //console.log('Still rsvping....');
+                    
+                      let clickedBar = this.bars[index];
+                      //console.log('RSVPing for Bar: ', clickedBar);
+                    
+                      let barId = clickedBar.id;
+                      let currentRsvps = 0 + clickedBar.totalRSVPs;
+                      currentRsvps++;
+                    
+                      this.http.get('/api/rsvps/' + barId)
+                        .map((res: Response) => res.json())
+                        .subscribe(
+                            resp => {
+                              this.bars[index].totalRSVPs = currentRsvps;
+                              this.bars[index].userIsGoing = 1;
+                            }
+                        );                    
+                      
+                      return true;
+                    }
+                }
+            );      
     }
     
     cancelRsvp(index: any) {
-        console.log("Cancelling RSVP with index: ", this.bars[index]);
+        let clickedBar = this.bars[index];
+        //console.log('Cancelling RSVP for Bar: ', clickedBar);
+        
+        let barId = clickedBar.id;
+        let currentRsvps = 0 + clickedBar.totalRSVPs;
+        currentRsvps--;
+        
+        this.http.get('/api/rsvps/cancel/' + barId)
+            .map((res: Response) => res.json())
+            .subscribe(
+                resp => {
+                    this.bars[index].totalRSVPs = currentRsvps;
+                    this.bars[index].userIsGoing = 0; 
+                }
+            );         
     }
     
     getUserLocation() {
@@ -82,9 +129,9 @@ export class HomeComponent implements OnInit {
     
     getBars(city: string) {
         // Call getBarsByCity from businessService. Pass in the city to search
-        //Cookie.set('previousSearch', city);
+        Cookie.set('previousSearch', city);
         
-        console.log("Getting bars for city: ", city);
+        //console.log("Getting bars for city: ", city);
         
         this.http.get('/api/yelp-search/' + city)
             .map((res: Response) => res.json())

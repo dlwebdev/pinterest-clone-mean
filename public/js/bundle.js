@@ -16503,8 +16503,7 @@ $__System.registerDynamic("6", ["3", "7"], true, function($__require, exports, m
     AppComponent = __decorate([core_1.Component({
       directives: [router_1.ROUTER_DIRECTIVES],
       selector: 'my-app',
-      styles: ["h1 {\n\tcolor: white;\n\tbackground: darkgray;\n\tpadding: 20px;\n}\n"],
-      template: "\n<router-outlet></router-outlet>\n\n<a [routerLink]=\"['/']\">Home</a> | <a [routerLink]=\"['/about']\">About</a> | <a [routerLink]=\"['/test']\">TEST</a>"
+      template: "<router-outlet></router-outlet>"
     }), __metadata('design:paramtypes', [])], AppComponent);
     return AppComponent;
   }());
@@ -24904,6 +24903,7 @@ $__System.registerDynamic("41", ["3", "43", "44"], true, function($__require, ex
     }
     HomeComponent.prototype.ngOnInit = function() {
       var previousSearch = "";
+      console.log('Checking for cookie: ', previousSearch);
       if (previousSearch) {
         this.cityToSearch = previousSearch;
         this.getBars(previousSearch);
@@ -24912,10 +24912,40 @@ $__System.registerDynamic("41", ["3", "43", "44"], true, function($__require, ex
       }
     };
     HomeComponent.prototype.rsvp = function(index) {
-      console.log("Will RSVP: ", this.bars[index]);
+      var _this = this;
+      this.http.get('/api/user/authenticated').map(function(data) {
+        return data.json();
+      }).subscribe(function(resp) {
+        if (!resp.authenticated) {
+          window.location.href = '/auth/twitter';
+          return false;
+        } else {
+          var clickedBar = _this.bars[index];
+          var barId = clickedBar.id;
+          var currentRsvps_1 = 0 + clickedBar.totalRSVPs;
+          currentRsvps_1++;
+          _this.http.get('/api/rsvps/' + barId).map(function(res) {
+            return res.json();
+          }).subscribe(function(resp) {
+            _this.bars[index].totalRSVPs = currentRsvps_1;
+            _this.bars[index].userIsGoing = 1;
+          });
+          return true;
+        }
+      });
     };
     HomeComponent.prototype.cancelRsvp = function(index) {
-      console.log("Cancelling RSVP with index: ", this.bars[index]);
+      var _this = this;
+      var clickedBar = this.bars[index];
+      var barId = clickedBar.id;
+      var currentRsvps = 0 + clickedBar.totalRSVPs;
+      currentRsvps--;
+      this.http.get('/api/rsvps/cancel/' + barId).map(function(res) {
+        return res.json();
+      }).subscribe(function(resp) {
+        _this.bars[index].totalRSVPs = currentRsvps;
+        _this.bars[index].userIsGoing = 0;
+      });
     };
     HomeComponent.prototype.getUserLocation = function() {
       navigator.geolocation.getCurrentPosition(this.successCallback.bind(this));
@@ -24943,7 +24973,6 @@ $__System.registerDynamic("41", ["3", "43", "44"], true, function($__require, ex
     };
     HomeComponent.prototype.getBars = function(city) {
       var _this = this;
-      console.log("Getting bars for city: ", city);
       this.http.get('/api/yelp-search/' + city).map(function(res) {
         return res.json();
       }).subscribe(function(resp) {

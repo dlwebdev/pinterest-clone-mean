@@ -18,6 +18,8 @@ ul {
 
 .rounded-input {
   border-radius: 5px;
+  height: 34px;
+  padding-left: 10px;
 }
 
 .go-btn {
