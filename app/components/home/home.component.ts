@@ -12,7 +12,7 @@ export class HomeComponent {
     users: {};
 
     constructor(http: Http) {
-        http.get("/users")
+        http.get("/api/users")
             .map(data => data.json())
             .subscribe((data) => this.users = data);
     }
