@@ -12,10 +12,10 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 // Use 8080 for Cloud 9 
-//var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '8080');
 
 // Use 3000 for heroku
-var port = normalizePort(process.env.PORT || '3000');
+//var port = normalizePort(process.env.PORT || '3000');
 
 app.set('port', port);
 
