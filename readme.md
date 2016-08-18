@@ -8,16 +8,20 @@ https://express-angular2-slim.herokuapp.com/
 
 ## Install
 ```bash
-git clone https://github.com/vladotesanovic/angular2-express-slim
+git clone https://github.com/dlwebdev/angular2-express-slim
 cd angular2-express-slim
 
 # Install dependencies
 npm install && npm run typings
 
+# To rebuild js
+npm run bundle
+npm run bundle:prod
+
 # run and watch for changes in .ts files
 npm start
 
-# Applciation url: http://localhost:3000
+# Application available at url: http://localhost:8080
 ```
 
 ## Development
