@@ -15,6 +15,7 @@ cd angular2-express-slim
 npm install && npm run typings
 
 # To rebuild js
+tsc
 npm run bundle
 npm run bundle:prod
 
