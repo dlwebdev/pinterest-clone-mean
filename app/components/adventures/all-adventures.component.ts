@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 @Component({
     selector: 'my-all-adventures',
     templateUrl: 'components/adventures/all-adventures.component.html',
@@ -7,5 +8,19 @@ import { Component } from '@angular/core';
 export class AllAdventuresComponent {
     name: string = "Everyones Adventures";
 
-    constructor() {}
+    constructor() { }
+    
+    ngOnInit() {
+        this.initMasonry();    
+    }    
+    
+    initMasonry() {
+        // vanilla JS
+        console.log("Initializing masonry.");
+        
+        var msnry = new Masonry( '.grid', {
+          itemSelector: '.grid-item,
+          columnWidth: 200
+        });        
+    }
 }

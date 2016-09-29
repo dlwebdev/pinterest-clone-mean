@@ -27315,6 +27315,16 @@ $__System.registerDynamic("2f", ["3"], true, function ($__require, exports, modu
         function AllAdventuresComponent() {
             this.name = "Everyones Adventures";
         }
+        AllAdventuresComponent.prototype.ngOnInit = function () {
+            this.initMasonry();
+        };
+        AllAdventuresComponent.prototype.initMasonry = function () {
+            // vanilla JS
+            console.log("Initializing masonry.");
+            var msnry = new Masonry('.grid', {
+                itemSelector: '.grid-item'
+            });
+        };
         AllAdventuresComponent = __decorate([core_1.Component({
             selector: 'my-all-adventures',
             templateUrl: 'components/adventures/all-adventures.component.html',
