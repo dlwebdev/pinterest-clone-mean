@@ -1,15 +1,13 @@
 ## Angular2 Express slim starter
 ### Heroku ready wih SystemJS builder
 
-- Angular 2 RC.5 ( https://angular.io/docs/ts/latest/quickstart.html )
+- Angular 2 STABLE RELEASE 2.0.1
 - Express ( from generator )
-
-https://express-angular2-slim.herokuapp.com/
 
 ## Install
 ```bash
-git clone https://github.com/dlwebdev/angular2-express-slim
-cd angular2-express-slim
+git clone https://github.com/dlwebdev/angular2-mean-slim
+cd angular2-mean-slim
 
 # Install dependencies
 npm install && npm run typings
