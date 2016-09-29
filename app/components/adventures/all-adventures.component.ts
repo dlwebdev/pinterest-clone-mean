@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllAdventuresComponent {
     name: string = "Everyones Adventures";
+    images: array = [
+        {
+        "text": "Hiking the Rockies!",
+        "img-url": "",
+        "username": "",
+        "favorite-count": 0
+        }
+    ]    
 
     constructor() { }
     
@@ -15,11 +23,8 @@ export class AllAdventuresComponent {
     }    
     
     initMasonry() {
-        // vanilla JS
-        console.log("Initializing masonry.");
-        
         var msnry = new Masonry( '.grid', {
-          itemSelector: '.grid-item,
+          itemSelector:'.grid-item',
           columnWidth: 200
         });        
     }

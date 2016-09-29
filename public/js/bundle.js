@@ -27314,15 +27314,20 @@ $__System.registerDynamic("2f", ["3"], true, function ($__require, exports, modu
     var AllAdventuresComponent = function () {
         function AllAdventuresComponent() {
             this.name = "Everyones Adventures";
+            this.images = {
+                "text": "Hiking the Rockies!",
+                "img-url": "",
+                "username": "",
+                "favorite-count": 0
+            };
         }
         AllAdventuresComponent.prototype.ngOnInit = function () {
             this.initMasonry();
         };
         AllAdventuresComponent.prototype.initMasonry = function () {
-            // vanilla JS
-            console.log("Initializing masonry.");
             var msnry = new Masonry('.grid', {
-                itemSelector: '.grid-item'
+                itemSelector: '.grid-item',
+                columnWidth: 200
             });
         };
         AllAdventuresComponent = __decorate([core_1.Component({

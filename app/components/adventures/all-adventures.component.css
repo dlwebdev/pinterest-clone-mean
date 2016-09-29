@@ -1,7 +1,38 @@
-/* ---- grid ---- */
+.description-wrapper {
+	font-weight: bold;
+	text-align: center;
+	font-size: 15px;
+	padding: 5px 0 5px 0;
+}
 
+.favorite-picker {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.action-wrapper .username {
+	margin-left: 5px;
+}
+
+.action-wrapper .favorite-count {
+	font-size: 14px;
+}
+
+.action-wrapper .glyphicon {
+	cursor: pointer;
+}
+
+.image-wrapper img {
+	border-radius: 5px;
+}
+
+.favorite-picker span {
+	float:left;
+}
+
+/* ---- grid ---- */
 .grid {
-  background: #EEE;
+  background: #fff;
 }
 
 /* clearfix */
@@ -15,10 +46,11 @@
 
 .grid-item {
   width: 160px;
-  height: 120px;
+  min-height: 160px;
+  padding: 5px;
   float: left;
-  background: #D26;
-  border: 2px solid #333;
+  background: #f5f5f5;
+  border: 1px solid #333;
   border-color: hsla(0, 0%, 0%, 0.5);
   border-radius: 5px;
 }
