@@ -1,13 +1,23 @@
+import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { TestComponent } from './components/test/test.component';
 
-export const routes: Routes = [
-    { path: '', component: HomeComponent, terminal: true },
-    { path: 'about', component: AboutComponent },
-    { path: 'test', component: TestComponent }
+const appRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },    
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  }  
 ];
 
-export const routing = RouterModule.forRoot(routes, { useHash: true });
+export const routing = RouterModule.forRoot(appRoutes, { useHash: true });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Http } from "@angular/http";
+//import { Http } from "@angular/http";
 //import './rxjs-operators';
 
 @Component({
@@ -8,14 +8,5 @@ import { Http } from "@angular/http";
     styleUrls: ['components/test/test.component.css']
 })
 export class TestComponent {
-    name: string = "Test";
-    rsvps: {};
-
-    constructor(http: Http) {
-        console.log("GETTING RSVPS from API!");
-        
-        http.get("/api/rsvps")
-            .map(data => data.json())
-            .subscribe((data) => this.rsvps = data);
-    }
+    constructor() { }
 }

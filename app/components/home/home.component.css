@@ -1,6 +1,7 @@
 :host {
   display: block;
   padding: 0 16px;
+  margin-top: 75px;
 }
 
 body, html {
