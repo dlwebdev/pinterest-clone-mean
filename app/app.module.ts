@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from "./components/home/home.component";
 import { AppComponent }  from './app.component';
 import { NavbarComponent } from "./components/shared/navbar/navbar.component";
+import { AllAdventuresComponent } from './components/adventures/all-adventures.component';
 import { AboutComponent } from "./components/about/about.component";
 
 import { routing } from "./routes";
@@ -20,7 +21,8 @@ import { routing } from "./routes";
         NavbarComponent,
         AppComponent,
         HomeComponent,
-        AboutComponent
+        AboutComponent,
+        AllAdventuresComponent
     ],
     bootstrap: [ AppComponent ]
 })
