@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app')));
 
-mongoose.connect('mongodb://admin:admin@ds145405.mlab.com:45405/dlw-nightlife-app'); // Connect to MongoDB database for polling app.  
+mongoose.connect('mongodb://admin:admin@ds047146.mlab.com:47146/dlw-pinterest-clone'); // Connect to MongoDB database for polling app.  
 
 // Make sure mongod is running! If not, log an error and exit. 
 

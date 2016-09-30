@@ -23,9 +23,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a [routerLink]="['login']">LOGIN</a>
+        <li *ngIf="!userLoggedIn">
+          <a href="/auth/twitter"><i class="fa fa-twitter"></i>&nbsp;LOGIN</a>
         </li>
+        <li *ngIf="userLoggedIn">
+          <a href="/api/user/logout">LOGOUT</a>
+        </li>        
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

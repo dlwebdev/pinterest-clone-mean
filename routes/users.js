@@ -17,6 +17,11 @@ router.get('/authenticated', function(req, res, next) {
   res.json({'authenticated': authed});
 });    
     
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});    
+    
 router.get('/get-id-of-logged-in', function(req, res, next) {
   if (req.isAuthenticated()) {
     res.json({'user': req.user});
