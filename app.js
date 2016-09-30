@@ -7,12 +7,10 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var async = require('async');
-var moment = require('moment');
 
 var MongoStore = require('connect-mongo')(session);
 
-var rsvps = require('./routes/rsvps');
+var images = require('./routes/images');
 var users = require('./routes/users');
 
 require('./server/passport')(passport);
@@ -66,7 +64,7 @@ app.get('/auth/twitter/callback',
   });  
 
 app.use('/api/user', users);
-app.use('/api/rsvps', rsvps);
+app.use('/api/images', images);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

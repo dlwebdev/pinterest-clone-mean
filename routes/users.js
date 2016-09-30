@@ -22,6 +22,15 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });    
     
+router.get('/current-user', function(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.json(req.user.twitter);
+  } 
+  else {
+    res.json({});
+  }
+});     
+    
 router.get('/get-id-of-logged-in', function(req, res, next) {
   if (req.isAuthenticated()) {
     res.json({'user': req.user});

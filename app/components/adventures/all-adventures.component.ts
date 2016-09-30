@@ -1,5 +1,7 @@
 import { Component, OnInit, ngAfterViewInit } from '@angular/core';
 
+import { ImagesService } from "../shared/services/images.service";
+
 @Component({
     selector: 'my-all-adventures',
     templateUrl: 'components/adventures/all-adventures.component.html',
@@ -7,7 +9,9 @@ import { Component, OnInit, ngAfterViewInit } from '@angular/core';
 })
 export class AllAdventuresComponent {
     name: string = "Everyones Adventures";
-    images: array = [
+    images: array = [];
+    
+    images2: array = [
         {
             "id": "1",
             "text": "Hiking the Rockies!",
@@ -61,11 +65,21 @@ export class AllAdventuresComponent {
         }        
     ]    
 
-    constructor() { }
+    constructor(private imagesService: ImagesService) { } 
+    
+    ngOnInit() {
+        this.getImages();
+    }     
     
     ngAfterViewInit() {
         this.initMasonry();    
-    }    
+    }
+    
+    getImages(): void {
+        this.imagesService
+            .getAllImages()
+            .then(images => this.images = images);
+    }
     
     initMasonry() {
 
