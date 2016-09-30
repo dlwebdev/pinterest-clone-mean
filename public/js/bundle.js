@@ -41296,7 +41296,7 @@ $__System.registerDynamic("41", ["3", "34", "e"], true, function ($__require, ex
             var _this = this;
             this.authService.getCurrentUser().then(function (userResp) {
                 _this.user = userResp;
-                _this.newImage.username = _this.user.username;
+                _this.newImage.username = userResp.username;
             });
         };
         ManageComponent.prototype.saveImage = function () {
