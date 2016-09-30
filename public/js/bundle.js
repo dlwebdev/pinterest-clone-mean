@@ -27335,7 +27335,7 @@ $__System.registerDynamic("2f", ["3"], true, function ($__require, exports, modu
                 "favoriteCount": 1
             }, {
                 "id": "4",
-                "text": "Look Out!",
+                "text": "What a view",
                 "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/look-out.jpg",
                 "username": "@danwillcode",
                 "user-icon": "",
