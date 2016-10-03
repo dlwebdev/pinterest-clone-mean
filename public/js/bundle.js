@@ -26068,51 +26068,6 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
             this.imagesService = imagesService;
             this.name = "Everyones Adventures";
             this.images = [];
-            this.images2 = [{
-                "id": "1",
-                "text": "Hiking the Rockies!",
-                "imgUrl": "http://static.travel.usnews.com/images/destinations/128/hiking_in_the_rockies.jpg",
-                "username": "@danwillcode",
-                "user-icon": "",
-                "favoriteCount": 6
-            }, {
-                "id": "2",
-                "text": "What a rush!",
-                "imgUrl": "http://media1.santabanta.com/full1/Adventure%20Sports/Adventure%20Sports/adventure-sports-50a.jpg",
-                "username": "",
-                "favoriteCount": 2
-            }, {
-                "id": "3",
-                "text": "Submerged",
-                "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/submerged.jpg",
-                "username": "",
-                "favoriteCount": 1
-            }, {
-                "id": "4",
-                "text": "What a view",
-                "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/look-out.jpg",
-                "username": "@danwillcode",
-                "user-icon": "",
-                "favoriteCount": 10
-            }, {
-                "id": "5",
-                "text": "One-World Trade",
-                "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg",
-                "username": "",
-                "favoriteCount": 0
-            }, {
-                "id": "6",
-                "text": "Drizzle",
-                "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/drizzle.jpg",
-                "username": "",
-                "favoriteCount": 2
-            }, {
-                "id": "7",
-                "text": "Cat Nose",
-                "imgUrl": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/cat-nose.jpg",
-                "username": "",
-                "favoriteCount": 1
-            }];
         }
         AllAdventuresComponent.prototype.ngOnInit = function () {
             this.getImages();
@@ -26179,6 +26134,12 @@ $__System.registerDynamic("34", ["3", "35", "36"], true, function ($__require, e
         }
         ImagesService.prototype.getAllImages = function () {
             return this.http.get(this.imagesApiUrl).toPromise().then(function (response) {
+                return response.json();
+            }).catch(this.handleError);
+        };
+        ImagesService.prototype.getUsersImages = function () {
+            console.log("Image service here. Passing along user id for images to retrieve: ");
+            return this.http.get(this.imagesApiUrl + 'currentuser/').toPromise().then(function (response) {
                 return response.json();
             }).catch(this.handleError);
         };
@@ -41288,9 +41249,11 @@ $__System.registerDynamic("41", ["3", "34", "e"], true, function ($__require, ex
                 "userIcon": "",
                 "favoriteCount": 0
             };
+            this.images = [];
         }
         ManageComponent.prototype.ngOnInit = function () {
             this.getCurrentUser();
+            this.getImagesForUser();
         };
         ManageComponent.prototype.getCurrentUser = function () {
             var _this = this;
@@ -41298,12 +41261,25 @@ $__System.registerDynamic("41", ["3", "34", "e"], true, function ($__require, ex
                 _this.user = userResp;
                 _this.newImage.username = userResp.username;
             });
+            //this.getUsersImages(this.user.id);        
+        };
+        ManageComponent.prototype.getImagesForUser = function () {
+            var _this = this;
+            console.log("Getting your images...");
+            this.imagesService.getUsersImages().then(function (images) {
+                console.log("Images for user response: ", images);
+                _this.images = images;
+            });
         };
         ManageComponent.prototype.saveImage = function () {
             var _this = this;
             this.imagesService.postNewImage(this.newImage).then(function (image) {
                 _this.newImage = image;
             });
+        };
+        ManageComponent.prototype.deleteImage = function (index) {
+            var imageToDelete = this.images[index];
+            console.log("Will delete this image: ", imageToDelete);
         };
         ManageComponent = __decorate([core_1.Component({
             selector: 'my-manage',

@@ -1,7 +1,7 @@
 <div class="container">
     <h2>Manage Your Adventures</h2>
 
-    <!--<pre>{{newImage | json}}</pre>-->
+    <!--<pre>{{images | json}}</pre>-->
 
     <form *ngIf="newImage">
       <div class="form-group">
@@ -16,5 +16,23 @@
       
       <button type="button" (click)="saveImage()" class="btn btn-default">Save</button>
     </form>
+    
+    <h3>Your Image Adventures</h3>
+    
+    <div class="row">
+      <div class="flex-container">
+        
+        <div *ngFor="let image of images; let i = index;" class="flex-item">
+          <img src="{{ image.imgUrl }}" class="img-responsive">
+          
+          <div class="description-wrapper text-center">
+            {{ image.text }}
+          </div>          
+          
+          <button type="button" class="close" (click)="deleteImage(i)">×</button>
+        </div>
+        
+      </div> 
+    </div>    
 
 </div>

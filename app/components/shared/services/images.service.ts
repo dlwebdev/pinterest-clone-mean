@@ -20,6 +20,15 @@ export class ImagesService {
                .catch(this.handleError);
   }
   
+  getUsersImages(): Promise<Object[]> {
+    console.log("Image service here. Passing along user id for images to retrieve: ");
+    
+    return this.http.get(this.imagesApiUrl + 'currentuser/')
+               .toPromise()
+               .then(response => response.json() as Object[])
+               .catch(this.handleError);
+  }
+  
   postNewImage(data:Object): Promise<Hero> {
     return this.http
       .post(this.imagesApiUrl, JSON.stringify(data), {headers: this.headers})

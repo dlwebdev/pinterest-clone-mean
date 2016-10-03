@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ImagesService } from "../shared/services/images.service";
@@ -19,25 +19,45 @@ export class ManageComponent {
         "userIcon": "",
         "favoriteCount": 0        
     };
+    images: array = [];
 
     constructor(private authService: AuthService, private imagesService: ImagesService) { } 
     
     ngOnInit() {
         this.getCurrentUser();
-    }    
+        this.getImagesForUser();
+    }  
     
-    getCurrentUser() {
+    getCurrentUser(): void {
       this.authService.getCurrentUser()
         .then(userResp => {
             this.user = userResp;
             this.newImage.username = userResp.username;
         });
-    }     
+        
+      //this.getUsersImages(this.user.id);        
+    }  
     
-    saveImage() {
+    getImagesForUser() {
+        console.log("Getting your images...");
+        
+        this.imagesService.getUsersImages()
+            .then(images => {
+                console.log("Images for user response: ", images);
+                this.images = images;
+            });        
+    }
+    
+    saveImage(): void {
         this.imagesService.postNewImage(this.newImage)
           .then(image => {
             this.newImage = image;
           });        
     }
+    
+    deleteImage(index: string): void {
+        let imageToDelete = this.images[index];
+        console.log("Will delete this image: ", imageToDelete);
+    }
+    
 }

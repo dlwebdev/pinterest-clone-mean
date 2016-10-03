@@ -11,6 +11,17 @@ router.get('/', function(req, res) {
     }); 
 });
 
+router.get('/currentuser/', function(req, res) {
+    var username = req.user.twitter.username;
+    
+    console.log("Getting all images for user currently logged in. Twitter Username: ", username);
+    
+    Image.find({'username': username},function(err, images) {
+        if(err) console.log('Err: ', err);
+        res.json(images);
+    }); 
+});
+
 router.post('/', function(req, res) {
     // Create a new image
 
