@@ -14,12 +14,18 @@ router.get('/', function(req, res) {
 router.get('/currentuser/', function(req, res) {
     var username = req.user.twitter.username;
     
-    console.log("Getting all images for user currently logged in. Twitter Username: ", username);
-    
     Image.find({'username': username},function(err, images) {
         if(err) console.log('Err: ', err);
         res.json(images);
     }); 
+});
+
+router.delete('/:id', function(req, res) {
+    var id = req.params.id;
+    
+    Image.remove({'_id': id},function(result) {
+        res.json(result);
+    });    
 });
 
 router.post('/', function(req, res) {
@@ -32,8 +38,6 @@ router.post('/', function(req, res) {
       userIcon: req.body.userIcon,
       favoriteCount: req.body.favoriteCount
     });
-    
-    console.log('Saving image: ', image);
 
     image.save(function (err, image) {
       if (err) { 

@@ -26149,8 +26149,8 @@ $__System.registerDynamic("34", ["3", "35", "36"], true, function ($__require, e
             }).catch(this.handleError);
         };
         ImagesService.prototype.deleteImage = function (id) {
-            return this.http.delete(this.imagesApiUrl + id).map(function (res) {
-                return res.json();
+            return this.http.delete(this.imagesApiUrl + id).toPromise().then(function (res) {
+                return res.json().data;
             }).catch(this.handleError);
         };
         ImagesService.prototype.handleError = function (error) {
@@ -41261,13 +41261,10 @@ $__System.registerDynamic("41", ["3", "34", "e"], true, function ($__require, ex
                 _this.user = userResp;
                 _this.newImage.username = userResp.username;
             });
-            //this.getUsersImages(this.user.id);        
         };
         ManageComponent.prototype.getImagesForUser = function () {
             var _this = this;
-            console.log("Getting your images...");
             this.imagesService.getUsersImages().then(function (images) {
-                console.log("Images for user response: ", images);
                 _this.images = images;
             });
         };
@@ -41279,7 +41276,8 @@ $__System.registerDynamic("41", ["3", "34", "e"], true, function ($__require, ex
         };
         ManageComponent.prototype.deleteImage = function (index) {
             var imageToDelete = this.images[index];
-            console.log("Will delete this image: ", imageToDelete);
+            this.imagesService.deleteImage(imageToDelete._id);
+            this.images.splice(index, 1);
         };
         ManageComponent = __decorate([core_1.Component({
             selector: 'my-manage',

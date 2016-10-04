@@ -39,8 +39,9 @@ export class ImagesService {
   
   deleteImage(id:string): Promise<Object[]> {
     return this.http.delete(this.imagesApiUrl + id)
-                    .map((res: Response) => res.json())
-                    .catch(this.handleError);
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError);
   }   
 
   private handleError (error: any) {

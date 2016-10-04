@@ -34,16 +34,11 @@ export class ManageComponent {
             this.user = userResp;
             this.newImage.username = userResp.username;
         });
-        
-      //this.getUsersImages(this.user.id);        
     }  
     
     getImagesForUser() {
-        console.log("Getting your images...");
-        
         this.imagesService.getUsersImages()
             .then(images => {
-                console.log("Images for user response: ", images);
                 this.images = images;
             });        
     }
@@ -57,7 +52,9 @@ export class ManageComponent {
     
     deleteImage(index: string): void {
         let imageToDelete = this.images[index];
-        console.log("Will delete this image: ", imageToDelete);
+        
+        this.imagesService.deleteImage(imageToDelete._id);
+        this.images.splice(index, 1);
     }
     
 }
