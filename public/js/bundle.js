@@ -26068,23 +26068,28 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
             this.imagesService = imagesService;
             this.name = "Everyones Adventures";
             this.images = [];
+            this.errors = [];
         }
         AllAdventuresComponent.prototype.ngOnInit = function () {
             this.getImages();
         };
         AllAdventuresComponent.prototype.ngAfterViewInit = function () {
+            $(document).ready(function () {
+                console.log("Jquery is here.");
+                $('.grid-image').brokenImage({ replacement: '/images/placeholder.png' });
+            });
             this.initMasonry();
         };
         AllAdventuresComponent.prototype.getImages = function () {
             var _this = this;
             this.imagesService.getAllImages().then(function (images) {
-                return _this.images = images;
+                _this.images = images;
             });
         };
         AllAdventuresComponent.prototype.initMasonry = function () {
             var grid = document.querySelector('.grid');
             var msnry;
-            imagesLoaded(grid, function () {
+            var imgLoad = imagesLoaded(grid, function () {
                 // init Isotope after all images have loaded
                 msnry = new Masonry(grid, {
                     itemSelector: '.grid-item',
@@ -26093,6 +26098,7 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
                     percentPosition: true
                 });
             });
+            //$('.image-wrapper img').brokenImage({replacement: '/images/placeholder.png'});
         };
         AllAdventuresComponent = __decorate([core_1.Component({
             selector: 'my-all-adventures',

@@ -9,7 +9,7 @@
     
 	<div *ngFor="let image of images" class="grid-item">
       <div class="image-wrapper">
-        <img src="{{ image.imgUrl }}" />
+        <img class="grid-image" src="{{ image.imgUrl }}" />
       </div>
       <div class="description-wrapper text-center">
         {{ image.text }}

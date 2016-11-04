@@ -10,6 +10,7 @@ import { ImagesService } from "../shared/services/images.service";
 export class AllAdventuresComponent {
     name: string = "Everyones Adventures";
     images: array = [];
+    errors: array = [];
 
     constructor(private imagesService: ImagesService) { } 
     
@@ -18,21 +19,28 @@ export class AllAdventuresComponent {
     }     
     
     ngAfterViewInit() {
+        
+        $( document ).ready(function() {
+            console.log("Jquery is here.");
+            $('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
+        });        
+        
         this.initMasonry();    
     }
     
     getImages(): void {
         this.imagesService
             .getAllImages()
-            .then(images => this.images = images);
+            .then(images => {
+                this.images = images;
+            });
     }
     
     initMasonry() {
-
         const grid = document.querySelector('.grid');
         let msnry;
         
-        imagesLoaded( grid, function() {
+        var imgLoad = imagesLoaded( grid, function() {
           // init Isotope after all images have loaded
           msnry = new Masonry( grid, {
             itemSelector: '.grid-item',
@@ -40,7 +48,9 @@ export class AllAdventuresComponent {
             gutter: 10,
             percentPosition: true
           });
-        });        
+        });   
         
+        //$('.image-wrapper img').brokenImage({replacement: '/images/placeholder.png'});
     }
+    
 }
