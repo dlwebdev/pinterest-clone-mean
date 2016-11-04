@@ -18,11 +18,28 @@ export class AllAdventuresComponent {
         this.getImages();
     }     
     
+    imgError(image) {
+        image.src='/images/placeholder.png';
+        console.log("Retrigger grid.");
+        
+        //image.onerror = "";
+        //image.src = "/images/placeholder.png";
+        //return true;
+    }    
+    
     ngAfterViewInit() {
         
         $( document ).ready(function() {
-            console.log("Jquery is here.");
-            $('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
+            console.log("Jquery is here. Checking for broken images...");
+            
+            //$('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
+            
+            /*
+            $('img').error(function(){ 
+                console.log("Found broken image..");
+                $(this).attr('src', '/images/placeholder.png');
+            });
+            */
         });        
         
         this.initMasonry();    

@@ -26073,10 +26073,23 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
         AllAdventuresComponent.prototype.ngOnInit = function () {
             this.getImages();
         };
+        AllAdventuresComponent.prototype.imgError = function (image) {
+            image.src = '/images/placeholder.png';
+            console.log("Retrigger grid.");
+            //image.onerror = "";
+            //image.src = "/images/placeholder.png";
+            //return true;
+        };
         AllAdventuresComponent.prototype.ngAfterViewInit = function () {
             $(document).ready(function () {
-                console.log("Jquery is here.");
-                $('.grid-image').brokenImage({ replacement: '/images/placeholder.png' });
+                console.log("Jquery is here. Checking for broken images...");
+                //$('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
+                /*
+                $('img').error(function(){
+                    console.log("Found broken image..");
+                    $(this).attr('src', '/images/placeholder.png');
+                });
+                */
             });
             this.initMasonry();
         };
