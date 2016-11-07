@@ -9,8 +9,7 @@
     
 	<div *ngFor="let image of images" class="grid-item">
       <div class="image-wrapper">
-        <img class="grid-image" src="{{ image.imgUrl }}" onError="this.src='/images/placeholder.png'" />
-        <!--<img class="grid-image" src="{{ image.imgUrl }}" (error)="imgError(this);" />-->
+        <img class="grid-image" src="{{ image.imgUrl }}" (error)="imgError(image);" />
       </div>
       <div class="description-wrapper text-center">
         {{ image.text }}

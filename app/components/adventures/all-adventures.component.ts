@@ -19,29 +19,11 @@ export class AllAdventuresComponent {
     }     
     
     imgError(image) {
-        image.src='/images/placeholder.png';
-        console.log("Retrigger grid.");
-        
-        //image.onerror = "";
-        //image.src = "/images/placeholder.png";
-        //return true;
+        image.imgUrl='/images/placeholder.png';
+        this.initMasonry();
     }    
     
     ngAfterViewInit() {
-        
-        $( document ).ready(function() {
-            console.log("Jquery is here. Checking for broken images...");
-            
-            //$('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
-            
-            /*
-            $('img').error(function(){ 
-                console.log("Found broken image..");
-                $(this).attr('src', '/images/placeholder.png');
-            });
-            */
-        });        
-        
         this.initMasonry();    
     }
     
@@ -66,8 +48,6 @@ export class AllAdventuresComponent {
             percentPosition: true
           });
         });   
-        
-        //$('.image-wrapper img').brokenImage({replacement: '/images/placeholder.png'});
     }
     
 }

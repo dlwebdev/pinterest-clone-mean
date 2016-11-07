@@ -26074,23 +26074,10 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
             this.getImages();
         };
         AllAdventuresComponent.prototype.imgError = function (image) {
-            image.src = '/images/placeholder.png';
-            console.log("Retrigger grid.");
-            //image.onerror = "";
-            //image.src = "/images/placeholder.png";
-            //return true;
+            image.imgUrl = '/images/placeholder.png';
+            this.initMasonry();
         };
         AllAdventuresComponent.prototype.ngAfterViewInit = function () {
-            $(document).ready(function () {
-                console.log("Jquery is here. Checking for broken images...");
-                //$('.grid-image').brokenImage({replacement: '/images/placeholder.png'});
-                /*
-                $('img').error(function(){
-                    console.log("Found broken image..");
-                    $(this).attr('src', '/images/placeholder.png');
-                });
-                */
-            });
             this.initMasonry();
         };
         AllAdventuresComponent.prototype.getImages = function () {
@@ -26111,7 +26098,6 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
                     percentPosition: true
                 });
             });
-            //$('.image-wrapper img').brokenImage({replacement: '/images/placeholder.png'});
         };
         AllAdventuresComponent = __decorate([core_1.Component({
             selector: 'my-all-adventures',
