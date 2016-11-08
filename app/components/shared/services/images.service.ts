@@ -44,13 +44,12 @@ export class ImagesService {
       .catch(this.handleError);
   }   
   
-  toggleImageFavoriteForUser(imageId:string, userId:string): Observable<string[]> {
-    let headers = new Headers({'Content-Type': 'application/json'});
-
-    return this.http.put('/api/images/user-favorited/' + imageId, userId, {
-      headers: headers
-    }).map((res) => res.json());
-
+  toggleImageFavoriteForUser(imageId:string, userId:string): Promise<Object[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.put('/api/images/user-favorited/' + imageId, userId, headers)
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
   }   
 
   private handleError (error: any) {
@@ -59,7 +58,7 @@ export class ImagesService {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
+    return;
   } 
 
 }

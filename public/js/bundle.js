@@ -26045,7 +26045,7 @@ var define = $__System.amdDefine;
 }));
 
 })();
-$__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports, module) {
+$__System.registerDynamic("33", ["3", "34", "e"], true, function ($__require, exports, module) {
     "use strict";
 
     var define,
@@ -26063,15 +26063,25 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
     };
     var core_1 = $__require("3");
     var images_service_1 = $__require("34");
+    var auth_service_1 = $__require("e");
     var AllAdventuresComponent = function () {
-        function AllAdventuresComponent(imagesService) {
+        function AllAdventuresComponent(imagesService, authService) {
             this.imagesService = imagesService;
+            this.authService = authService;
             this.name = "Everyones Adventures";
             this.images = [];
             this.errors = [];
+            this.userLoggedIn = false;
         }
         AllAdventuresComponent.prototype.ngOnInit = function () {
+            this.getUserAuthStatus();
             this.getImages();
+        };
+        AllAdventuresComponent.prototype.getUserAuthStatus = function () {
+            var _this = this;
+            this.authService.getUserAuthStatus().then(function (userResp) {
+                return _this.userLoggedIn = userResp.authenticated;
+            });
         };
         AllAdventuresComponent.prototype.imgError = function (image) {
             image.imgUrl = '/images/placeholder.png';
@@ -26087,9 +26097,19 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
             });
         };
         AllAdventuresComponent.prototype.incrementFavorite = function (imageIndex) {
+            // Check if they are logged in. If not, they cannot favorite it. SHOULD PROBABLY NOT SHOW AT ALL IF NOT LOGGED IN
+            if (this.userLoggedIn) {
+                console.log("User is logged in. Allow them to favorite if they have not done so before.");
+            } else {
+                console.log("User is not logged in. Send them to login page.");
+            }
             var image = this.images[imageIndex];
             console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
             console.log(image);
+            this.imagesService.toggleImageFavoriteForUser(image._id, "0") //this.user._id);
+            .then(function (resp) {
+                console.log("Response from incrementFavorite: ", resp);
+            });
         };
         AllAdventuresComponent.prototype.initMasonry = function () {
             var grid = document.querySelector('.grid');
@@ -26108,7 +26128,7 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
             selector: 'my-all-adventures',
             templateUrl: 'components/adventures/all-adventures.component.html',
             styleUrls: ['components/adventures/all-adventures.component.css']
-        }), __metadata('design:paramtypes', [images_service_1.ImagesService])], AllAdventuresComponent);
+        }), __metadata('design:paramtypes', [images_service_1.ImagesService, auth_service_1.AuthService])], AllAdventuresComponent);
         return AllAdventuresComponent;
     }();
     exports.AllAdventuresComponent = AllAdventuresComponent;
@@ -26163,12 +26183,18 @@ $__System.registerDynamic("34", ["3", "35", "36"], true, function ($__require, e
                 return res.json().data;
             }).catch(this.handleError);
         };
+        ImagesService.prototype.toggleImageFavoriteForUser = function (imageId, userId) {
+            var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+            return this.http.put('/api/images/user-favorited/' + imageId, userId, headers).toPromise().then(function (res) {
+                return res.json();
+            }).catch(this.handleError);
+        };
         ImagesService.prototype.handleError = function (error) {
             // In a real world app, we might use a remote logging infrastructure
             // We'd also dig deeper into the error to get a better message
             var errMsg = error.message ? error.message : error.status ? error.status + " - " + error.statusText : 'Server error';
             console.error(errMsg); // log to console instead
-            return Observable.throw(errMsg);
+            return;
         };
         ImagesService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [http_1.Http])], ImagesService);
         return ImagesService;

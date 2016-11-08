@@ -1,6 +1,7 @@
 import { Component, OnInit, ngAfterViewInit } from '@angular/core';
 
 import { ImagesService } from "../shared/services/images.service";
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
     selector: 'my-all-adventures',
@@ -13,7 +14,7 @@ export class AllAdventuresComponent {
     errors: array = [];
     userLoggedIn: boolean = false;
 
-    constructor(private imagesService: ImagesService) { } 
+    constructor(private imagesService: ImagesService, private authService: AuthService) { } 
     
     ngOnInit() {
         this.getUserAuthStatus();
@@ -55,6 +56,12 @@ export class AllAdventuresComponent {
         let image = this.images[imageIndex];
         console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
         console.log(image);
+        
+        this.imagesService
+            .toggleImageFavoriteForUser(image._id, "0")//this.user._id);
+            .then(resp => {
+                console.log("Response from incrementFavorite: ", resp);
+            });            
     }
     
     initMasonry() {
