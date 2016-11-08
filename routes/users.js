@@ -29,7 +29,7 @@ router.get('/current-user', function(req, res, next) {
   else {
     res.json({});
   }
-});     
+});
     
 router.get('/get-id-of-logged-in', function(req, res, next) {
   if (req.isAuthenticated()) {

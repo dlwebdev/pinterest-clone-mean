@@ -6,6 +6,7 @@ var imageSchema = new Schema({
   favoriteCount: Number,
   text: String,
   imgUrl: String,
+  favorites: Array,
   username: String,
   userIcon: String
 });

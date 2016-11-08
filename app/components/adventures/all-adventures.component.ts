@@ -46,6 +46,12 @@ export class AllAdventuresComponent {
     incrementFavorite(imageIndex: string): void {
         // Check if they are logged in. If not, they cannot favorite it. SHOULD PROBABLY NOT SHOW AT ALL IF NOT LOGGED IN
         
+        if(this.userLoggedIn) {
+            console.log("User is logged in. Allow them to favorite if they have not done so before.");
+        } else {
+            console.log("User is not logged in. Send them to login page.");
+        }
+        
         let image = this.images[imageIndex];
         console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
         console.log(image);
