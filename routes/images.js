@@ -58,8 +58,9 @@ router.get('/:id', function(req, res) {
 });
 
 // toggle-favorite will look for the id of the image passed. If it already exists in the favorites array, it will remove it, otherwise it will add it
-router.put('/user-favorited/:id', function(req, res) {
-    var imageId = req.params.id;
+router.put('/user-favorited/:imageId', function(req, res) {
+    var imageId = req.params.imageId;
+    console.log("Request body: ", req.body);
     var userId = req.body.userId;    
 
     console.log("Will see if userId is in this images favorites array. If not, will add it. If so, will remove it. Just toggles the favorites existence.");

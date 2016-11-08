@@ -43,6 +43,15 @@ export class ImagesService {
       .then(res => res.json().data)
       .catch(this.handleError);
   }   
+  
+  toggleImageFavoriteForUser(imageId:string, userId:string): Observable<string[]> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+
+    return this.http.put('/api/images/user-favorited/' + imageId, userId, {
+      headers: headers
+    }).map((res) => res.json());
+
+  }   
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
