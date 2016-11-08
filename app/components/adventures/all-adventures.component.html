@@ -7,7 +7,7 @@
 <div class="grid">
     <div class="grid-sizer"></div>
     
-	<div *ngFor="let image of images" class="grid-item">
+	<div *ngFor="let image of images; let i = index;" class="grid-item">
       <div class="image-wrapper">
         <img class="grid-image" src="{{ image.imgUrl }}" (error)="imgError(image);" />
       </div>
@@ -19,7 +19,7 @@
             {{ image.username }}
         </div>
         <div class="col-md-3 pull-right favorite-picker">
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true" (click)="incrementFavorite(i)"></span>
             <!-- IF YOU HAVE FAVORITED IT: glyphicon glyphicon-star-empty -->
             <!-- If you have not faved it: glyphicon glyphicon-star -->            
             <span class="favorite-count">{{ image.favoriteCount }}</span>

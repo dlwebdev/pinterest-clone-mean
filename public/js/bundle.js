@@ -26086,6 +26086,11 @@ $__System.registerDynamic("33", ["3", "34"], true, function ($__require, exports
                 _this.images = images;
             });
         };
+        AllAdventuresComponent.prototype.incrementFavorite = function (imageIndex) {
+            var image = this.images[imageIndex];
+            console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
+            console.log(image);
+        };
         AllAdventuresComponent.prototype.initMasonry = function () {
             var grid = document.querySelector('.grid');
             var msnry;
