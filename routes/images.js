@@ -63,6 +63,16 @@ router.put('/user-favorited/:id', function(req, res) {
     var userId = req.body.userId;    
 
     console.log("Will see if userId is in this images favorites array. If not, will add it. If so, will remove it. Just toggles the favorites existence.");
+    
+    Image.findOne({'_id':imageId},function(err, image) {
+        if(err) console.log('Err: ', err);
+        
+        if(image.favorites) {
+            console.log("Favorites array exists... look for this user id in array. If found they've already favorited it before. User id: ", userId);
+        }
+        
+        return res.send(image);
+    });      
 });
 
 module.exports = router;
