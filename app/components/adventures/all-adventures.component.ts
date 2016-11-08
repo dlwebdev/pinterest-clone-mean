@@ -11,12 +11,20 @@ export class AllAdventuresComponent {
     name: string = "Everyones Adventures";
     images: array = [];
     errors: array = [];
+    userLoggedIn: boolean = false;
 
     constructor(private imagesService: ImagesService) { } 
     
     ngOnInit() {
+        this.getUserAuthStatus();
         this.getImages();
     }     
+    
+    getUserAuthStatus(): void {
+      this.authService
+        .getUserAuthStatus()
+        .then(userResp => this.userLoggedIn = userResp.authenticated);
+    }      
     
     imgError(image) {
         image.imgUrl='/images/placeholder.png';
@@ -36,6 +44,8 @@ export class AllAdventuresComponent {
     }
     
     incrementFavorite(imageIndex: string): void {
+        // Check if they are logged in. If not, they cannot favorite it. SHOULD PROBABLY NOT SHOW AT ALL IF NOT LOGGED IN
+        
         let image = this.images[imageIndex];
         console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
         console.log(image);

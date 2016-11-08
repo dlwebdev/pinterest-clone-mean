@@ -19,7 +19,7 @@
             {{ image.username }}
         </div>
         <div class="col-md-3 pull-right favorite-picker">
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true" (click)="incrementFavorite(i)"></span>
+            <span class="glyphicon glyphicon-star-empty favorite-logged-in" aria-hidden="true" (click)="incrementFavorite(i)"></span>
             <!-- IF YOU HAVE FAVORITED IT: glyphicon glyphicon-star-empty -->
             <!-- If you have not faved it: glyphicon glyphicon-star -->            
             <span class="favorite-count">{{ image.favoriteCount }}</span>
