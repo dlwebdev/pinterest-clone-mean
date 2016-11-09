@@ -26098,6 +26098,7 @@ $__System.registerDynamic("33", ["3", "34", "e"], true, function ($__require, ex
         };
         AllAdventuresComponent.prototype.incrementFavorite = function (imageIndex) {
             // Check if they are logged in. If not, they cannot favorite it. SHOULD PROBABLY NOT SHOW AT ALL IF NOT LOGGED IN
+            var _this = this;
             if (this.userLoggedIn) {
                 console.log("User is logged in. Allow them to favorite if they have not done so before.");
             } else {
@@ -26110,8 +26111,9 @@ $__System.registerDynamic("33", ["3", "34", "e"], true, function ($__require, ex
             console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
             console.log(image);
             this.imagesService.toggleImageFavoriteForUser(image._id) //this.user._id);
-            .then(function (resp) {
-                console.log("Response from incrementFavorite: ", resp);
+            .then(function (image) {
+                console.log("Response from incrementFavorite: ", image);
+                _this.images[imageIndex].favoriteCount = image.favoriteCount;
             });
         };
         AllAdventuresComponent.prototype.initMasonry = function () {

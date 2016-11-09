@@ -62,35 +62,35 @@ router.put('/user-favorited/:imageId', function(req, res) {
     var imageId = req.params.imageId;
     
     if(!req.user) {
-        console.log("NO USER DETECTED. Cannot favorite an image without logging in.");
+        //console.log("NO USER DETECTED. Cannot favorite an image without logging in.");
         return;
     }
     
     var userId = req.user._id;  
     
-    console.log("User ID: ", userId);
-    console.log("Will see if userId is in this images favorites array. If not, will add it. If so, will remove it. Just toggles the favorites existence.");
+    //console.log("User ID: ", userId);
+    //console.log("Will see if userId is in this images favorites array. If not, will add it. If so, will remove it. Just toggles the favorites existence.");
     
     Image.findOne({'_id':imageId},function(err, image) {
         if(err) console.log('Err: ', err);
         
-        console.log("Image BEFORE: ", image);
+        //console.log("Image BEFORE: ", image);
         
         if(image.favorites) {
-            console.log("Favorites array exists... look for this user id in array. If found they've already favorited it before. User id: ", userId);
+            //console.log("Favorites array exists... look for this user id in array. If found they've already favorited it before. User id: ", userId);
             
             var currentFavs = image.favorites;
             
-            console.log("Current favs: ", currentFavs);
+            //console.log("Current favs: ", currentFavs);
             
             var locationOfThisElement = currentFavs.indexOf(userId);
-            console.log("Index of: ", locationOfThisElement);
+            //console.log("Index of: ", locationOfThisElement);
             
             if(locationOfThisElement !== -1) {
-                console.log("This user has already favorited this image. They are now unfavoriting it, so remove from array");
+               // console.log("This user has already favorited this image. They are now unfavoriting it, so remove from array");
                 currentFavs.splice(locationOfThisElement, 1);
             } else {
-                console.log("User has not yet favorited this image, add to the array");
+                //console.log("User has not yet favorited this image, add to the array");
                 currentFavs.push(userId);
             }
             
@@ -99,7 +99,7 @@ router.put('/user-favorited/:imageId', function(req, res) {
             
             delete image._id;
             
-            console.log("New image object: ", image);
+            //console.log("New image object: ", image);
         
             Image.update({_id: imageId}, image, {upsert: true}, function (err, image) {
                 if(err) console.log('Err: ', err);
