@@ -64,8 +64,9 @@ export class AllAdventuresComponent {
         
         this.imagesService
             .toggleImageFavoriteForUser(image._id)//this.user._id);
-            .then(resp => {
-                console.log("Response from incrementFavorite: ", resp);
+            .then(image => {
+                console.log("Response from incrementFavorite: ", image);
+                this.images[imageIndex] = image;
             });            
     }
     
