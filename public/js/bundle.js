@@ -26104,9 +26104,12 @@ $__System.registerDynamic("33", ["3", "34", "e"], true, function ($__require, ex
                 console.log("User is not logged in. Send them to login page.");
             }
             var image = this.images[imageIndex];
+            var user = {
+                "userId": "0"
+            };
             console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
             console.log(image);
-            this.imagesService.toggleImageFavoriteForUser(image._id, "0") //this.user._id);
+            this.imagesService.toggleImageFavoriteForUser(image._id) //this.user._id);
             .then(function (resp) {
                 console.log("Response from incrementFavorite: ", resp);
             });
@@ -26183,9 +26186,9 @@ $__System.registerDynamic("34", ["3", "35", "36"], true, function ($__require, e
                 return res.json().data;
             }).catch(this.handleError);
         };
-        ImagesService.prototype.toggleImageFavoriteForUser = function (imageId, userId) {
+        ImagesService.prototype.toggleImageFavoriteForUser = function (imageId) {
             var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-            return this.http.put('/api/images/user-favorited/' + imageId, userId, headers).toPromise().then(function (res) {
+            return this.http.put('/api/images/user-favorited/' + imageId, headers).toPromise().then(function (res) {
                 return res.json();
             }).catch(this.handleError);
         };

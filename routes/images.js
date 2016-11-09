@@ -60,9 +60,15 @@ router.get('/:id', function(req, res) {
 // toggle-favorite will look for the id of the image passed. If it already exists in the favorites array, it will remove it, otherwise it will add it
 router.put('/user-favorited/:imageId', function(req, res) {
     var imageId = req.params.imageId;
-    console.log("Request body: ", req.body);
-    var userId = req.body.userId;    
-
+    
+    if(!req.user) {
+        console.log("NO USER DETECTED. Cannot favorite an image without logging in.");
+        return;
+    }
+    
+    var userId = req.user._id;  
+    
+    console.log("User ID: ", userId);
     console.log("Will see if userId is in this images favorites array. If not, will add it. If so, will remove it. Just toggles the favorites existence.");
     
     Image.findOne({'_id':imageId},function(err, image) {
@@ -70,6 +76,18 @@ router.put('/user-favorited/:imageId', function(req, res) {
         
         if(image.favorites) {
             console.log("Favorites array exists... look for this user id in array. If found they've already favorited it before. User id: ", userId);
+            
+            var currentFavs = image.favorites;
+            
+            console.log("Current favs: ", currentFavs);
+            console.log("Index of: ", currentFavs.indexOf(userId));
+            
+            if(currentFavs.indexOf(userId) !== -1) {
+                console.log("This user has already favorited this image. They are now unfavoriting it, so remove from array");
+            } else {
+                console.log("User has not yet favorited this image, add to the array");
+            }
+
         }
         
         return res.send(image);

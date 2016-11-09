@@ -54,11 +54,16 @@ export class AllAdventuresComponent {
         }
         
         let image = this.images[imageIndex];
+        
+        let user = {
+            "userId":"0"
+        }
+        
         console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
         console.log(image);
         
         this.imagesService
-            .toggleImageFavoriteForUser(image._id, "0")//this.user._id);
+            .toggleImageFavoriteForUser(image._id)//this.user._id);
             .then(resp => {
                 console.log("Response from incrementFavorite: ", resp);
             });            

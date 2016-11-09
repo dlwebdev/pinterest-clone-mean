@@ -44,9 +44,10 @@ export class ImagesService {
       .catch(this.handleError);
   }   
   
-  toggleImageFavoriteForUser(imageId:string, userId:string): Promise<Object[]> {
+  toggleImageFavoriteForUser(imageId:string): Promise<Object[]> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.put('/api/images/user-favorited/' + imageId, userId, headers)
+    
+    return this.http.put('/api/images/user-favorited/' + imageId, headers)
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
