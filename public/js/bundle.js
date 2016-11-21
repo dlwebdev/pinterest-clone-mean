@@ -26105,14 +26105,9 @@ $__System.registerDynamic("33", ["3", "34", "e"], true, function ($__require, ex
                 console.log("User is not logged in. Send them to login page.");
             }
             var image = this.images[imageIndex];
-            var user = {
-                "userId": "0"
-            };
-            console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
-            console.log(image);
-            this.imagesService.toggleImageFavoriteForUser(image._id) //this.user._id);
-            .then(function (image) {
-                console.log("Response from incrementFavorite: ", image);
+            // console.log("Will increment favorite count for this image unless they have already done so before. Then unfavorite it.");
+            // console.log(image);
+            this.imagesService.toggleImageFavoriteForUser(image._id).then(function (image) {
                 _this.images[imageIndex].favoriteCount = image.favoriteCount;
             });
         };
