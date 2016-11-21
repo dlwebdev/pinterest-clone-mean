@@ -5,6 +5,6 @@ module.exports = {
   'twitterAuth': {
     'consumerKey': 'eu7tmOkywXbmS5b9mDUYnWknr',
     'consumerSecret': 'c4VdVx85LFmfRZVAjoRLVGQ1lpzgXwcShWJkWyF4VXsbNhReme',
-    'callbackURL': 'https://pinterest-clone-dlwebdev.c9users.io/auth/twitter/callback'
+    'callbackURL': 'https://image-adventures.herokuapp.com/auth/twitter/callback'
   }    
 };
